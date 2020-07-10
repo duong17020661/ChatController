@@ -134,3 +134,4 @@ C:\Users\THDuong\source\repos\WebChat\WebChat\obj\Debug\netcoreapp3.1\WebChat.Mv
 C:\Users\THDuong\source\repos\WebChat\WebChat\bin\Debug\netcoreapp3.1\MySqlConnector.dll
 C:\Users\THDuong\source\repos\WebChat\WebChat\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\THDuong\source\repos\WebChat\WebChat\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
+C:\Users\THDuong\source\repos\WebChat\WebChat\obj\Debug\netcoreapp3.1\WebChat.csproj.CoreCompileInputs.cache
