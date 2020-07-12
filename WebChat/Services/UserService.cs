@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using WebChat.Data;
 using WebChat.Helpers;
 using WebChat.Models;
@@ -17,6 +17,7 @@ namespace WebChat.Services
         AuthenticateResponse Authenticate(AuthenticateRequest model);
 
         AuthenticateResponse AuthenticateRegister(RegisterRequest model);
+
     }
 
     public class UserService : IUserService
@@ -32,10 +33,28 @@ namespace WebChat.Services
             _context = dataContext;
             _appSettings = appSettings.Value;
         }
+        // Crate MD5
+        public static string CreateMD5(string input)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            var user = _context.Users.FirstOrDefault(x => x.username == model.Username && x.password == CreateMD5(model.Password));
 
             // return null if user not found
             if (user == null) return null;
@@ -48,8 +67,26 @@ namespace WebChat.Services
         public AuthenticateResponse AuthenticateRegister(RegisterRequest model)
         {
             // To do
+            var user = new User
+            {
+                Id = new Guid(),
+                username = model.username,
+                password = CreateMD5(model.password),
+                firstName = model.firstName,
+                lastName = model.lastName,
+                avatar = "",
+                email = model.email,
+                phone = model.phone,
+                lastMessage = "",
+                status = false,
+                newMessage = 0,
+                lastSeen = new DateTime(),
+            };
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            var token = generateJwtToken(user);
 
-            return null;
+            return new AuthenticateResponse(user, token);
         }
 
         private string generateJwtToken(User user)
@@ -69,5 +106,6 @@ namespace WebChat.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
     }
 }

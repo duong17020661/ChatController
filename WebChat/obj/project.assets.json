@@ -8525,23 +8525,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\THDuong\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\THDuong\\source\\repos\\WebChat\\WebChat\\WebChat.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Source\\Repos\\ChatController\\WebChat\\WebChat.csproj",
       "projectName": "WebChat",
-      "projectPath": "C:\\Users\\THDuong\\source\\repos\\WebChat\\WebChat\\WebChat.csproj",
-      "packagesPath": "C:\\Users\\THDuong\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\THDuong\\source\\repos\\WebChat\\WebChat\\obj\\",
+      "projectPath": "C:\\Users\\Admin\\Source\\Repos\\ChatController\\WebChat\\WebChat.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\Source\\Repos\\ChatController\\WebChat\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\THDuong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8614,7 +8610,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
       }
     }
   },
