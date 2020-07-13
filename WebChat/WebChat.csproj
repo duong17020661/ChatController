@@ -5,17 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200710010632_DbInit.cs" />
-    <Compile Remove="Migrations\20200710010632_DbInit.Designer.cs" />
-    <Compile Remove="Migrations\20200711030504_Db.cs" />
-    <Compile Remove="Migrations\20200711030504_Db.Designer.cs" />
-    <Compile Remove="Migrations\20200711134751_Messenger.cs" />
-    <Compile Remove="Migrations\20200711134751_Messenger.Designer.cs" />
-    <Compile Remove="Migrations\20200711135001_Messenger.cs" />
-    <Compile Remove="Migrations\20200711135001_Messenger.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0-preview1.19506.2" />

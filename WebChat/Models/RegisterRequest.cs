@@ -17,6 +17,6 @@ namespace WebChat.Models
         [Required]
         public string email { get; set; }
         [Required]
-        public int phone { get; set; }
+        public string phone { get; set; }
     }
 }

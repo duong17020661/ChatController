@@ -47,8 +47,8 @@ namespace WebChat.Migrations
                     b.Property<string>("password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("phone")
-                        .HasColumnType("int");
+                    b.Property<string>("phone")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("status")
                         .HasColumnType("tinyint(1)");

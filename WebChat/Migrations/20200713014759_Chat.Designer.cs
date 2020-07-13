@@ -9,8 +9,8 @@ using WebChat.Data;
 namespace WebChat.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200711141314_Messenger")]
-    partial class Messenger
+    [Migration("20200713014759_Chat")]
+    partial class Chat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,8 +49,8 @@ namespace WebChat.Migrations
                     b.Property<string>("password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("phone")
-                        .HasColumnType("int");
+                    b.Property<string>("phone")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("status")
                         .HasColumnType("tinyint(1)");

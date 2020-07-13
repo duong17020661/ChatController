@@ -14,7 +14,7 @@ namespace WebChat.Models
         public string lastName { get; set; }
         public string avatar { get; set; }
         public string email { get; set; }
-        public int phone { get; set; }
+        public string phone { get; set; }
         public string lastMessage { get; set; }
         public bool status { get; set; }
         public int newMessage { get; set; }

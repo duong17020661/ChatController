@@ -89,23 +89,26 @@ namespace WebChat.Services
             return new AuthenticateResponse(user, token);
         }
 
-        private string generateJwtToken(User user)
+        public string generateJwtToken(User user)
         {
-            // generate token that is valid for 7 days
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("userId", user.Id.ToString()),
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _appSettings.Issuer,
+                audience: _appSettings.Audience,
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: credentials
+            );
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
+
 }

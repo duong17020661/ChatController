@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebChat.Migrations
 {
-    public partial class Messenger : Migration
+    public partial class Chat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace WebChat.Migrations
                     lastName = table.Column<string>(nullable: true),
                     avatar = table.Column<string>(nullable: true),
                     email = table.Column<string>(nullable: true),
-                    phone = table.Column<int>(nullable: false),
+                    phone = table.Column<string>(nullable: true),
                     lastMessage = table.Column<string>(nullable: true),
                     status = table.Column<bool>(nullable: false),
                     newMessage = table.Column<int>(nullable: false),
