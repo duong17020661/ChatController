@@ -11,6 +11,7 @@ using WebChat.Data;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using WebChat.Repository;
 
 namespace WebChat.Controllers
 {
@@ -60,27 +61,6 @@ namespace WebChat.Controllers
             }
 
             return user;
-        }
-        [AllowAnonymous]
-        [HttpPost("authenticate/login")]
-        public IActionResult Authenticate([FromBody]AuthenticateRequest model)
-        {
-            var response = _userService.Authenticate(model);
-
-            if (response == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            return Ok(response);
-        }
-        [HttpPost("authenticate/register")]
-        public IActionResult AuthenticateRegister([FromBody] RegisterRequest model)
-        {
-            var response = _userService.AuthenticateRegister(model);
-
-            if (response == null)
-                return BadRequest(new { message = "Username or email already exist" });
-
-            return Ok(response);
         }
     }
 }

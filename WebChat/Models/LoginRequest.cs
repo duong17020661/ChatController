@@ -2,7 +2,7 @@
 
 namespace WebChat.Models
 {
-    public class AuthenticateRequest
+    public class LoginRequest
     {
         [Required]
         public string Username { get; set; }

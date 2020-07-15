@@ -9,16 +9,10 @@ using Microsoft.Extensions.Options;
 using WebChat.Data;
 using WebChat.Helpers;
 using WebChat.Models;
+using WebChat.Repository;
 
 namespace WebChat.Services
 {
-    public interface IUserService
-    {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
-
-        AuthenticateResponse AuthenticateRegister(RegisterRequest model);
-
-    }
 
     public class UserService : IUserService
     {
@@ -52,7 +46,7 @@ namespace WebChat.Services
             }
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        public AuthenticateResponse Login(LoginRequest model)
         {
             var user = _context.Users.FirstOrDefault(x => x.username == model.Username && x.password == CreateMD5(model.Password));
 
@@ -64,8 +58,14 @@ namespace WebChat.Services
 
             return new AuthenticateResponse(user, token);
         }
-        public AuthenticateResponse AuthenticateRegister(RegisterRequest model)
+        public AuthenticateResponse Register(RegisterRequest model)
         {
+            if (string.IsNullOrWhiteSpace(model.password))
+                throw new AppException("Bạn phải nhập mật khẩu !");
+            if (_context.Users.Any(x => x.email == model.email))
+                throw new AppException("Email " + model.email + " da ton tai");
+            if (_context.Users.Any(x => x.username == model.username))
+                throw new AppException("Email " + model.username + " da ton tai");
             // To do
             var user = new User
             {

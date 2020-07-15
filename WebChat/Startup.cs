@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using WebChat.Services;
 using WebChat.Data;
 using Microsoft.EntityFrameworkCore;
+using WebChat.Repository;
 
 namespace WebChat
 {
