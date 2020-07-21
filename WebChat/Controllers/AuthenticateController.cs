@@ -16,10 +16,16 @@ namespace WebChat.Controllers
     public class AuthenticateController : ControllerBase
     {
         private IUserService _userService;
+
         public AuthenticateController(IUserService userService)
         {
             _userService = userService;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest model)
         {
@@ -31,7 +37,7 @@ namespace WebChat.Controllers
             return Ok(response);
         }
         [HttpPost("register")]
-        public IActionResult AuthenticateRegister([FromBody] RegisterRequest model)
+        public IActionResult Register([FromBody] RegisterRequest model)
         {
             
             try

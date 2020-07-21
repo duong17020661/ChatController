@@ -6,6 +6,9 @@ namespace WebChat.Models
 {
     public class User
     {
+        /// <summary>
+        /// User model
+        /// </summary>
         public Guid Id { get; set; }
         public string username { get; set; }
         [JsonIgnore]

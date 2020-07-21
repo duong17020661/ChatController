@@ -13,7 +13,11 @@ namespace WebChat.Models
         public string Avatar { get; set; }
         public string Token { get; set; }
 
-
+        /// <summary>
+        /// Dữ liệu trả về Client để xác thực
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="token"></param>
         public AuthenticateResponse(User user, string token)
         {
             Id = user.Id;

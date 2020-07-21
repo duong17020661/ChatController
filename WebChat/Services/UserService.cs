@@ -15,10 +15,7 @@ namespace WebChat.Services
 {
 
     public class UserService : IUserService
-    {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-
-
+    { 
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
 
@@ -27,7 +24,7 @@ namespace WebChat.Services
             _context = dataContext;
             _appSettings = appSettings.Value;
         }
-        // Crate MD5
+        // Băm String thành dạng MD5
         public static string CreateMD5(string input)
         {
             // Use input string to calculate MD5 hash
@@ -45,7 +42,11 @@ namespace WebChat.Services
                 return sb.ToString();
             }
         }
-
+        /// <summary>
+        /// Hàm xác thực đăng nhập
+        /// </summary>
+        /// <param name="model">Dữ liệu đăng nhập từ Client</param>
+        /// <returns></returns>
         public AuthenticateResponse Login(LoginRequest model)
         {
             var user = _context.Users.FirstOrDefault(x => x.username == model.Username && x.password == CreateMD5(model.Password));
@@ -58,15 +59,29 @@ namespace WebChat.Services
 
             return new AuthenticateResponse(user, token);
         }
+        /// <summary>
+        /// Hàm xác thực đăng ký
+        /// </summary>
+        /// <param name="model">Dữ liệu đăng ký từ Client</param>
+        /// <returns></returns>
         public AuthenticateResponse Register(RegisterRequest model)
         {
+            // Xử lý một số lỗi khi đăng ký
             if (string.IsNullOrWhiteSpace(model.password))
                 throw new AppException("Bạn phải nhập mật khẩu !");
+            if (string.IsNullOrWhiteSpace(model.username))
+                throw new AppException("Bạn phải nhập tên đăng nhập !");
+            if (string.IsNullOrWhiteSpace(model.email))
+                throw new AppException("Bạn phải nhập email !");
+            if (string.IsNullOrWhiteSpace(model.repassword))
+                throw new AppException("Bạn phải nhập mật khẩu !");
+            if (model.password != model.repassword)
+                throw new AppException("Mật khẩu chưa trùng khớp !");
             if (_context.Users.Any(x => x.email == model.email))
                 throw new AppException("Email " + model.email + " da ton tai");
             if (_context.Users.Any(x => x.username == model.username))
                 throw new AppException("Email " + model.username + " da ton tai");
-            // To do
+            // Tạo một đối tượng mới để thêm vào CSDK
             var user = new User
             {
                 Id = new Guid(),
@@ -88,16 +103,23 @@ namespace WebChat.Services
 
             return new AuthenticateResponse(user, token);
         }
-
+        /// <summary>
+        /// Tạo token xác thực đăng nhập và dùng để kết nối với Stringee
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public string generateJwtToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            var name = user.firstName + " " + user.lastName;
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("userId", user.Id.ToString()),
+                new Claim("name", name.ToString()),
+                new Claim("avatar", user.avatar.ToString())
             };
 
             var token = new JwtSecurityToken(

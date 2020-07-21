@@ -55,6 +55,7 @@ namespace WebChat
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileServices, FileService>();
             services.AddDbContextPool<DataContext>(
               options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")
            ));
