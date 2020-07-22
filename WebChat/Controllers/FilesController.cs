@@ -27,6 +27,19 @@ namespace WebChat.Controllers
         {
             return await _context.Files.ToListAsync();
         }
+        // GET: api/Files/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FileAndImage>> GetFileAndImage(String id)
+        {
+            var fileAndImage = await _context.Files.Where(x => x.convId == id).ToListAsync();
+
+            if (fileAndImage == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(fileAndImage);
+        }
 
         [HttpPost]
         public async Task<ActionResult<FileAndImage>> PostFile([FromBody]FileAndImage file)
