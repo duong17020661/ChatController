@@ -10,6 +10,7 @@ using WebChat.Data;
 using WebChat.Helpers;
 using WebChat.Models;
 using WebChat.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebChat.Services
 {
@@ -103,6 +104,22 @@ namespace WebChat.Services
 
             return new AuthenticateResponse(user, token);
         }
+        public User Update(Guid id, User user)
+        {
+            var updateUser = _context.Users.SingleOrDefault(x => x.Id == id);
+
+            if (updateUser != null)
+            {
+                updateUser.firstName = user.firstName;
+                updateUser.lastName = user.lastName;
+                updateUser.email = user.email;
+                updateUser.avatar = user.avatar;
+            }
+            _context.Entry(updateUser).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return updateUser;
+        }
         /// <summary>
         /// Tạo token xác thực đăng nhập và dùng để kết nối với Stringee
         /// </summary>
@@ -119,7 +136,7 @@ namespace WebChat.Services
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("userId", user.Id.ToString()),
                 new Claim("name", name.ToString()),
-                new Claim("avatar", user.avatar.ToString())
+                new Claim("avatar", user.avatar.ToString()),
             };
 
             var token = new JwtSecurityToken(

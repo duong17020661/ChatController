@@ -62,5 +62,16 @@ namespace WebChat.Controllers
 
             return user;
         }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<User>> GetPut([FromRoute]Guid id, User user)
+        {
+            var response = _userService.Update(id, user);
+
+            return Ok(response);
+        }
+        private bool UserExists(Guid id)
+        {
+            return _context.Users.Any(e => e.Id == id);
+        }
     }
 }

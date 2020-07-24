@@ -12,5 +12,7 @@ namespace WebChat.Repository
 
         AuthenticateResponse Register(RegisterRequest model);
 
+        User Update(Guid id, User user);
+
     }
 }
